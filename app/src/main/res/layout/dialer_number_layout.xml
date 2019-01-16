@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:layout_gravity="bottom"
+              android:gravity="center"
+              android:layout_marginBottom="84dp"
+
+>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+
+            android:layout_marginTop="10dp"
+    >
+        <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
+        <EditText
+                android:id="@+id/edtInput"
+                android:layout_width="match_parent"
+                android:drawablePadding="2dip"
+
+                android:paddingRight="4dp"
+                android:paddingEnd="4dp"
+                android:singleLine="true"
+                android:layout_height="match_parent"
+                android:paddingTop="10dp"
+                android:drawableRight="@drawable/ic_backspace"
+                android:drawableEnd="@drawable/ic_backspace"
+                android:layout_alignParentBottom="true"
+                android:background="#fff"
+              android:keyboardNavigationCluster="false"
+                android:gravity="center"
+                android:inputType="none|phone"
+
+
+                android:textSize="@dimen/dialpad_btn_size"/>
+        <!--  <ImageButton
+                  android:layout_width="wrap_content"
+                  android:layout_alignParentEnd="true"
+                  android:padding="10dp"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentBottom="true"
+                  android:background="@drawable/transparent"
+                  android:layout_height="match_parent" app:srcCompat="@drawable/ic_backspace"
+                  android:id="@+id/imageButton"
+                  android:layout_alignParentTop="true"/>
+  -->
+
+    </RelativeLayout>
+
+    <GridLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+
+            app:layout_gravity="center">
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                app:layout_gravity="center"
+                android:gravity="center"
+                android:text="1"
+                app:fontFamily="sans-serif-condensed"
+
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnOne"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:text="2"
+                app:layout_gravity="center"
+                android:gravity="center"
+                app:fontFamily="sans-serif-condensed"
+                android:textColor="@color/colorAccent"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnTwo"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp" app:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:text="3"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                app:fontFamily="sans-serif-condensed"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnThree"/>
+
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:text="4"
+                app:fontFamily="sans-serif-condensed"
+                app:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnFour"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:textColor="@color/colorAccent"
+                android:text="5"
+                app:fontFamily="sans-serif-condensed"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnFive"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:text="6"
+                app:fontFamily="sans-serif-condensed"
+                android:onClick="buttonClickEvent"
+                android:textColor="@color/colorAccent"
+                app:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnSix"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:text="7"
+                app:fontFamily="sans-serif-condensed"
+                android:textColor="@color/colorAccent"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnSeven"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                app:fontFamily="sans-serif-condensed"
+                android:text="8"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnEight"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                app:fontFamily="sans-serif-condensed"
+                android:textColor="@color/colorAccent"
+                android:text="9"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnNine"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                app:fontFamily="sans-serif-condensed"
+
+                android:text="*"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnAterisk"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:text="0"
+                app:fontFamily="sans-serif-condensed"
+                android:textColor="@color/colorAccent"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnZero"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+
+                app:fontFamily="sans-serif-condensed"
+                android:text="#"
+                android:onClick="buttonClickEvent"
+                android:background="@drawable/dialer_btn_ripple"
+                android:layout_margin="1dp"
+                android:textSize="@dimen/dialpad_btn_size"
+                android:id="@+id/btnHash"/>
+
+
+    </GridLayout>
+</LinearLayout>

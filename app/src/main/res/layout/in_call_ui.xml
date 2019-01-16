@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:background="@color/colorAccent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:text="Caller Name "
+            android:layout_width="match_parent"
+            android:textSize="48sp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_height="72dp"
+            android:layout_marginTop="50dp" android:id="@+id/callerName"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+
+            app:fabSize="normal"
+            android:layout_centerHorizontal="true"
+
+            android:layout_margin="18dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/ic_call_end"
+            android:backgroundTint="@color/colorRed"
+            android:id="@+id/call_end_button"
+    />
+    <Chronometer
+
+            android:layout_width="wrap_content"
+            android:textColor="#fff"
+            android:layout_below="@id/callerName"
+
+            android:textSize="22sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/timerText"
+            android:layout_height="wrap_content" />
+
+</RelativeLayout>

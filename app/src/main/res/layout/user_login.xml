@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_centerInParent="true"
+              android:background="@color/colorPrimary"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout android:orientation="vertical"
+                  android:paddingLeft="@dimen/side_margin"
+                  android:paddingEnd="@dimen/side_margin"
+                  android:paddingStart="@dimen/side_margin"
+                  android:paddingRight="@dimen/side_margin"
+android:layout_centerInParent="true"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+
+        <EditText
+                android:layout_width="match_parent"
+                android:hint="Username "
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/username"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:layout_marginTop="18dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/password"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_marginTop="18dp"
+                android:hint="IP Address"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/ipaddress"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Port"
+                android:inputType="phone"
+
+                android:layout_marginTop="18dp"
+                android:ems="10"
+                android:id="@+id/portNo"/>
+        <RelativeLayout
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content">
+            <Button
+                    android:text="Set credentials"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/setCredentials"/>
+            <ProgressBar
+                    android:visibility="invisible"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/credentials_Pb"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

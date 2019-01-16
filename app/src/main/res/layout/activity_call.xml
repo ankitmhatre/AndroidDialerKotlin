@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+
+>
+
+    <ImageView
+            android:id="@+id/imageBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_launcher_background"
+            android:fitsSystemWindows="false"
+            android:foreground="#33000000"
+    />
+
+    <TextView
+            android:id="@+id/textDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:layout_centerHorizontal="true"
+            tools:text="@tools:sample/full_names"
+    />
+
+    <TextView
+            android:id="@+id/textStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textDisplayName"
+            tools:text="Calling…"
+    />
+
+    <TextView
+            android:id="@+id/textDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="00:00:00"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textStatus"
+    />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonHangup"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="80dp"
+            android:layout_marginStart="40dp"
+            app:fabSize="normal"
+            android:backgroundTint="@color/colorRed"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_call_end"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+    />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonAnswer"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+
+            android:layout_margin="80dp"
+            android:backgroundTint="#07c663"
+            app:fabSize="normal"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_call"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+
+            tools:visibility="visible"
+    />
+
+</RelativeLayout>
