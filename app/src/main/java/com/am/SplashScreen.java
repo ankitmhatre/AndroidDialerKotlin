@@ -24,7 +24,7 @@ public class SplashScreen extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    startActivityForResult(new Intent(SplashScreen.this, SimpleSocketActivty.class), 0);
+                    startActivityForResult(new Intent(SplashScreen.this, Dialer.class), 0);
 
                 }
             }, 1500);

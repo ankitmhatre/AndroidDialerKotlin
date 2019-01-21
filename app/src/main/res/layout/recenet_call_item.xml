@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_height="72dp">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="36dp">
+        <TextView
+                android:layout_weight="0.8"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                android:ems="10"
+                android:text="Hello"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:id="@+id/mainnumber_tv"/>
+        <ImageView
+                android:layout_gravity="right|end"
+                android:layout_weight="0.3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
+                android:id="@+id/imageView_ic"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_alignParentBottom="true"
+                  android:layout_height="36dp">
+        <TextView
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                android:gravity="center_vertical"
+                android:text="Start Time"
+                android:textSize="18sp"
+                android:id="@+id/starttime_tv"/>
+        <TextView
+                android:layout_gravity="end"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:text="End Time"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_launcher_background"
+                android:id="@+id/endtime_tv"/>
+    </LinearLayout>
+</RelativeLayout>
