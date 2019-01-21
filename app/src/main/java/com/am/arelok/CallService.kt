@@ -1,10 +1,7 @@
 package com.am.arelok
 
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.hardware.Sensor
-import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.IBinder
 import android.telecom.Call
@@ -85,7 +82,11 @@ class CallService : InCallService() {
 
     private val callCallback = object : Call.Callback() {
         override fun onStateChanged(call: Call, state: Int) {
+            Log.d("stateofthecall", call.state.toString())
+            when(call.state) {
+            }
             CallManager.updateCall(call)
+
         }
     }
 

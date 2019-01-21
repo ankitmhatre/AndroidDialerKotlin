@@ -1,30 +1,49 @@
 package com.am;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.am.dialer.R;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.*;
 import java.util.Enumeration;
+import java.util.List;
 
 public class SimpleSocketActivty extends AppCompatActivity {
     ServerSocket ss = null;
     Socket s = null;
     boolean end = false;
     String gloabalres = "";
+    RecyclerView call_list_rv;
+    private RecentCallViewModel recentCallViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_for_socket_layout);
         gloabalres = "HI Ankit here";
-        new Thread(new Runnable() {
+        call_list_rv = (RecyclerView) findViewById(R.id.call_list_rv);
+        call_list_rv.setLayoutManager(new LinearLayoutManager(this));
+        call_list_rv.setHasFixedSize(true);
+        final RecentCallAdapter recentCallAdapter = new RecentCallAdapter();
+        call_list_rv.setAdapter(recentCallAdapter);
+
+        recentCallViewModel = ViewModelProviders.of(this).get(RecentCallViewModel.class);
+        recentCallViewModel.getListLiveData().observe(this, new Observer<List<RecentCall>>() {
+            @Override
+            public void onChanged(List<RecentCall> recentCalls) {
+                //update the list
+                recentCallAdapter.setRecentCalls(recentCalls);
+           //     Toast.makeText(SimpleSocketActivty.this, "changed", Toast.LENGTH_SHORT).show();
+            }
+        });
+     /*   new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -35,7 +54,8 @@ public class SimpleSocketActivty extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
+
 
     }
 
@@ -43,7 +63,7 @@ public class SimpleSocketActivty extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
+/*
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +93,7 @@ public class SimpleSocketActivty extends AppCompatActivity {
                 }
             }
         });
-        t.start();
+        t.start();*/
 
     }
 

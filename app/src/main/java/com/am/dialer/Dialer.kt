@@ -11,13 +11,12 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.text.InputType
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.am.RecentCallViewModel
 import com.am.service.MyConnectionService
 import kotlinx.android.synthetic.main.activity_dialer.*
 import kotlinx.android.synthetic.main.dialer_number_layout.*
@@ -25,10 +24,14 @@ import kotlinx.android.synthetic.main.dialer_number_layout.*
 
 class Dialer : AppCompatActivity(), View.OnTouchListener {
 
+
+    private var recentCallViewModel: RecentCallViewModel? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialer)
-        setSupportActionBar(toolbar)
+
 
         fab.setOnClickListener { view ->
             if (edtInput.length() > 0) {
@@ -58,21 +61,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
         callThisPerson()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_dialer, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     fun buttonClickEvent(v: View) {
         when (v.id) {
@@ -111,6 +100,9 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
             }
             R.id.btnHash -> {
                 edtInput.append("#")
+            }
+            R.id.call_list_rv -> {
+                dialerView.visibility = View.GONE
             }
         }
     }
@@ -178,7 +170,10 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
 
         var tel = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 
-        tel.placeCall(uri, bundle)
+        try {
+            tel.placeCall(uri, bundle)
+        } catch (e: Exception) {
+        }
 
     }
 

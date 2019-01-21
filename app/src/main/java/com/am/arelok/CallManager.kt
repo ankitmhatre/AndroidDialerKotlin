@@ -1,7 +1,9 @@
 package com.am.arelok
 
+import android.app.Application
 import android.telecom.Call
 import android.util.Log
+import com.am.RecentCallViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -13,7 +15,7 @@ object CallManager {
     private val subject = BehaviorSubject.create<GsmCall>()
 
     private var currentCall: Call? = null
-
+    var viewModal: RecentCallViewModel = RecentCallViewModel(Application())
     fun updates(): Observable<GsmCall> = subject
 
     fun updateCall(call: Call?) {
@@ -33,6 +35,7 @@ object CallManager {
     }
 
     fun acceptCall() {
+
         Log.i(LOG_TAG, "acceptCall")
         currentCall?.let {
             it.answer(it.details.videoState)
