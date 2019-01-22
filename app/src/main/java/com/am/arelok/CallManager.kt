@@ -15,7 +15,7 @@ object CallManager {
     private val subject = BehaviorSubject.create<GsmCall>()
 
     private var currentCall: Call? = null
-    var viewModal: RecentCallViewModel = RecentCallViewModel(Application())
+
     fun updates(): Observable<GsmCall> = subject
 
     fun updateCall(call: Call?) {
@@ -30,6 +30,7 @@ object CallManager {
             when (it.state) {
                 Call.STATE_RINGING -> rejectCall()
                 else               -> disconnectCall()
+
             }
         }
     }

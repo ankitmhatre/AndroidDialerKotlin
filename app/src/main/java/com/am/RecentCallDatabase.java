@@ -43,9 +43,9 @@ public abstract class RecentCallDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            recentCallDao.insert(new RecentCall(null, "1:59pm", true, "2:15pm", "+9197683105446"));
-            recentCallDao.insert(new RecentCall(null, "1:59pm", false, "2:15pm", "+8767565654456"));
-            recentCallDao.insert(new RecentCall(null, "1:59pm", true, "2:15pm", "+9197683105446"));
+            recentCallDao.insert(new RecentCall(null, "1548131038456", true, "1548131038456", "+9197683105446"));
+            recentCallDao.insert(new RecentCall(null, "1548131038456", false, "1548131038456", "+8767565654456"));
+            recentCallDao.insert(new RecentCall(null, "1548131038456", true, "1548131038456", "+9197683105446"));
 
 
 
