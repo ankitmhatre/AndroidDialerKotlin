@@ -11,7 +11,7 @@ import androidx.room.Update
 @Dao
 interface RecentCallDao {
 
-    @Query("SELECT * from recentcall")
+    @Query("SELECT * from recentcall ORDER BY time_started DESC")
     fun getAll(): LiveData<List<RecentCall>>
 
     @Insert(onConflict = REPLACE)
@@ -20,6 +20,8 @@ interface RecentCallDao {
     @Update(onConflict = REPLACE)
     fun update(weatherData: RecentCall)
 
+    @Query("DELETE FROM recentcall WHERE c_id = :cid ")
+    fun delete(cid: String)
 
     @Query("DELETE from recentcall")
     fun deleteAll()

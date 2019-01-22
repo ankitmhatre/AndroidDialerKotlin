@@ -18,6 +18,7 @@ android:layout_centerInParent="true"
 
 
         <EditText
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:hint="Username "
                 android:layout_height="wrap_content"
@@ -29,6 +30,7 @@ android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:layout_marginTop="18dp"
+                android:textStyle="bold"
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/password"/>
@@ -36,6 +38,7 @@ android:layout_centerInParent="true"
                 android:layout_width="match_parent"
                 android:layout_marginTop="18dp"
                 android:hint="IP Address"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
@@ -43,6 +46,7 @@ android:layout_centerInParent="true"
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:hint="Port"
                 android:inputType="phone"
 

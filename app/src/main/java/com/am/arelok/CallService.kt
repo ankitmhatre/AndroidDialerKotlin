@@ -13,12 +13,12 @@ import android.util.Log
 import com.am.InCallActivity
 import com.am.RecentCall
 import com.am.RecentCallDao
-import com.am.RecentCallDatabase
+import com.am.CallnUssdDatabase
 
 
 class CallService : InCallService() {
     public var incoming: Boolean = false
-
+    lateinit var recentnewCall: RecentCall
     companion object {
         private const val LOG_TAG = "CallService"
     }
@@ -72,7 +72,10 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
         Log.d("CallService", "oncalladded")
         //   Log.d("CallService", call?.details)
-
+        recentnewCall = RecentCall(
+            time_started = System.currentTimeMillis().toString(),
+            number = call.details.handle.schemeSpecificPart
+        )
         call.registerCallback(callCallback)
 
         startActivity(Intent(this, InCallActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK))
@@ -82,22 +85,44 @@ class CallService : InCallService() {
     }
 
     override fun onCallRemoved(call: Call) {
-        UpdateEnd(this.application, incoming).execute(call)
+        //UpdateEnd(this.application, incoming).execute(call)
         call.unregisterCallback(callCallback)
         CallManager.updateCall(null)
     }
 
     private val callCallback = object : Call.Callback() {
         override fun onStateChanged(call: Call, state: Int) {
-            Log.d("stateofthecall", call.state.toString())
+
+            var logstr = when (call.state) {
+                0 -> "STATE_NEW"
+                1 -> "STATE_DIALING"
+                2 -> "STATE_RINGING"
+                3 -> "STATE_HOLDING"
+                4 -> "STATE_ACTIVE"
+                7 -> "STATE_DISCONNECTED"
+                8 -> "STATE_SELECT_PHONE_ACCOUNT"
+                9 -> "STATE_CONNECTING"
+                10 -> "STATE_DISCONNECTING"
+                11 -> "STATE_PULLING_CALL"
+                else -> "UNKNOWN"
+            }
+            Log.d("recentcall", logstr)
+
+
             when (call.state) {
                 1 -> {
-                    incoming = false
-                    InsertRecenCall(this@CallService.application, incoming).execute(call)
+
+                    recentnewCall.incoming = false
+                    // InsertRecenCall(this@CallService.application, incoming).execute(call)
                 }
                 2 -> {
-                    incoming = true
-                    InsertRecenCall(application, incoming).execute(call)
+
+                    recentnewCall.incoming = true
+                    // InsertRecenCall(application, incoming).execute(call)
+                }
+                7 -> {
+                    recentnewCall.time_ended = System.currentTimeMillis().toString()
+                    InsertRecenCall(application).execute(recentnewCall)
                 }
             }
 
@@ -106,69 +131,28 @@ class CallService : InCallService() {
         }
     }
 
-    class InsertRecenCall : AsyncTask<Call, Void, String> {
+    class InsertRecenCall : AsyncTask<RecentCall, Void, String> {
         var application: Application
         var recentCallDao: RecentCallDao
-        var incoming: Boolean
 
-        constructor(application: Application, incoming: Boolean) {
+        constructor(application: Application) {
             this.application = application
-            recentCallDao = RecentCallDatabase.getInstance(application).RecentCallDao()
-            this.incoming = incoming
+            recentCallDao = CallnUssdDatabase.getInstance(application).RecentCallDao()
 
         }
 
 
-        override fun doInBackground(vararg params: Call?): String {
-            var newno = 1 + recentCallDao.getList().last()
-            var rcall = RecentCall(
-                c_id = null,
-                time_started = System.currentTimeMillis().toString(),
-                incoming = incoming,
-                time_ended = null,
-                number = params[0]?.details?.handle?.schemeSpecificPart
-            )
-            recentCallDao.insert(
-                rcall
-            )
+        override fun doInBackground(vararg params: RecentCall): String {
 
-            Log.d("recentcall", rcall.toString())
+
+            recentCallDao.insert(params[0])
+
+            Log.d("recentcall", params[0].toString())
 
             return ""
         }
     }
 
-    class UpdateEnd : AsyncTask<Call, Void, String> {
-        lateinit var application: Application
-        lateinit var recentCallDao: RecentCallDao
-        var incoming: Boolean
-
-        constructor(application: Application, incoming: Boolean) {
-            this.application = application
-            recentCallDao = RecentCallDatabase.getInstance(application).RecentCallDao()
-            this.incoming = incoming
-
-        }
-
-        override fun doInBackground(vararg params: Call?): String {
-            var newno = 1 + recentCallDao.getList().last()
-            var updatCall = RecentCall(
-                c_id = (recentCallDao.getList().last()),
-                incoming = incoming,
-                time_started = null,
-
-                time_ended = System.currentTimeMillis().toString(),
-                number = params[0]?.details?.handle?.schemeSpecificPart
-            )
-            recentCallDao.update(
-                updatCall
-            )
-            Log.d("recentcall", updatCall.toString())
-
-            return ""
-        }
-
-    }
 
 
 }

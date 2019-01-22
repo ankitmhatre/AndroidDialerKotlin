@@ -12,7 +12,8 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (PrefUtils.getBoolean(this, "first_launch", true)) {
+        //set default false
+        if (PrefUtils.getBoolean(this, "first_launch", false)) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

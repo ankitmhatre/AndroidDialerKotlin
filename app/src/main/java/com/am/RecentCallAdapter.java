@@ -46,21 +46,34 @@ public class RecentCallAdapter extends RecyclerView.Adapter<RecentCallAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RecentCallHolder holder, int position) {
         RecentCall call = recentCalls.get(position);
-        if (call != null && call.getIncoming()) {
-            Picasso.get().load(R.drawable.ic_action_phone_incoming).into(holder.ic);
-        } else {
-            Picasso.get().load(R.drawable.ic_action_phone_outgoing).into(holder.ic);
+        if (call != null)
+            try {
+                if (call.getIncoming()) {
+                Picasso.get().load(R.drawable.ic_action_phone_incoming).into(holder.ic);
+            } else {
+                Picasso.get().load(R.drawable.ic_action_phone_outgoing).into(holder.ic);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Picasso.get().load(R.drawable.ic_action_phone_incoming).into(holder.ic);
 
-        }
+            }
 
         holder.name.setText(call.getNumber() != null ? call.getNumber() : "unknown");
         if (call.getTime_started() != null) {
 
-            holder.start.setText("Started : " + getDate(Long.parseLong(call.getTime_started()), "hh:mm aa"));
+            holder.start.setText("Started : " + getDate(Long.parseLong(call.getTime_started()), "hh:mm:ss aa"));
         }
         if (call.getTime_ended() != null) {
-            holder.end.setText("Ended : " + getDate(Long.parseLong(call.getTime_ended()), "hh:mm aa"));
+            holder.end.setText("Ended : " + getDate(Long.parseLong(call.getTime_ended()), "hh:mm:ss aa"));
         }
+    }
+    public void removeItem(int position) {
+        recentCalls.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
     }
 
     public void setRecentCalls(List<RecentCall> recentCalls) {

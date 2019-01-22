@@ -1,6 +1,7 @@
 package com.am
 
 import android.content.Context
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
@@ -40,7 +41,7 @@ class InCallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
-
+        imageBackground.setBackgroundColor(Color.parseColor("#6200EE"))
         hideBottomNavigationBar()
 
         buttonHangup.setOnClickListener { CallManager.cancelCall() }
@@ -92,7 +93,35 @@ class InCallActivity : AppCompatActivity() {
             GsmCall.Status.ACTIVE -> View.GONE
             else -> View.VISIBLE
         }
+        when (gsmCall.status) {
+            GsmCall.Status.DISCONNECTED -> {
+                //red
+                imageBackground.setBackgroundColor(Color.parseColor("#B00020"))
+            }
+            GsmCall.Status.DIALING -> {
+                imageBackground.setBackgroundColor(Color.parseColor("#5f6368"))
+            }
+            GsmCall.Status.RINGING -> {
+                //down green
+                imageBackground.setBackgroundColor(Color.parseColor("#3d8c39"))
+            }
+            GsmCall.Status.ACTIVE -> {
+                //indigo
+                imageBackground.setBackgroundColor(Color.parseColor("#5c00d2"))
 
+            }
+            GsmCall.Status.UNKNOWN -> {
+                //grey
+                imageBackground.setBackgroundColor(Color.parseColor("#5f6368"))
+
+            }
+            GsmCall.Status.CONNECTING -> {
+                //grey and blue
+                    imageBackground.setBackgroundColor(Color.parseColor("#375f91"))
+
+            }
+            //
+        }
 
 
         textStatus.text = when (gsmCall.status) {

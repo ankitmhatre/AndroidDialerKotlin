@@ -31,6 +31,9 @@
                   android:label="Set Credentials">
 
         </activity>
+        <activity android:name="com.am.AddUSSDActivity" android:theme="@style/AppTheme.NoActionBar"
+
+        />
         <activity android:name="com.am.InCallActivity" android:noHistory="true"
                   android:excludeFromRecents="true"
                   android:theme="@style/AppTheme.NoActionBar"/>

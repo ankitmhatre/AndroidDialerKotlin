@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.am.AddUSSDActivity
 import com.am.RecentCallAdapter
 import com.am.RecentCallViewModel
 import com.am.service.MyConnectionService
@@ -37,6 +38,11 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialer)
         call_list_rv = findViewById<View>(R.id.call_list_rv) as RecyclerView
+
+//we can even delete item
+        //all the provisions are already present
+
+
         call_list_rv.layoutManager = LinearLayoutManager(this)
         val recentCallAdapter = RecentCallAdapter()
         call_list_rv.adapter = recentCallAdapter
@@ -97,7 +103,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
                 edtInput.append("2")
             }
             R.id.btnThree -> {
-                edtInput.append("32")
+                edtInput.append("3")
             }
             R.id.btnFour -> {
                 edtInput.append("4")
@@ -220,6 +226,8 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
                         edtInput.setSelection(edtInput.getText().length)//position cursor at the end of the line
                     }
                     return true
+                } else if (event.getRawX() <= (edtInput.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
+                    openSettings();
                 }
             }
         }
@@ -227,6 +235,11 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
 
         return true
+    }
+
+    private fun openSettings() {
+        var i: Intent = Intent(this, AddUSSDActivity::class.java)
+        startActivity(i)
     }
 
     override fun onClick(v: View?) {

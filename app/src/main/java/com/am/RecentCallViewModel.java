@@ -8,25 +8,27 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class RecentCallViewModel extends AndroidViewModel {
-    public RecentCallRepository recentCallRepository;
+    public CallnUssdRepository callnUssdRepository;
     public LiveData<List<RecentCall>> listLiveData;
+    public LiveData<List<UssdItem>> ussdList;
 
     public RecentCallViewModel(@NonNull Application application) {
         super(application);
-        recentCallRepository = new RecentCallRepository(application);
-        listLiveData = recentCallRepository.getAllCalls();
+        callnUssdRepository = new CallnUssdRepository(application);
+        listLiveData = callnUssdRepository.getAllCalls();
+        ussdList = callnUssdRepository.getUssdList();
     }
 
     public void insert(RecentCall recentCall) {
-        recentCallRepository.insert(recentCall);
+        callnUssdRepository.insert(recentCall);
     }
 
     public void update(RecentCall recentCall) {
-        recentCallRepository.update(recentCall);
+        callnUssdRepository.update(recentCall);
     }
 
     public void delete(RecentCall recentCall) {
-        recentCallRepository.delete(recentCall);
+        callnUssdRepository.delete(recentCall);
     }
 
     public LiveData<List<RecentCall>> getListLiveData() {
@@ -34,4 +36,18 @@ public class RecentCallViewModel extends AndroidViewModel {
     }
 
 
+    public void insertUssd(UssdItem UssdItem) {
+        callnUssdRepository.insertUssd(UssdItem);
+    }
+
+
+    public void deleteUssd(UssdItem UssdItem) {
+        callnUssdRepository.deleteUssd(UssdItem);
+    }
+
+    public LiveData<List<UssdItem>> getUssdList() {
+        return ussdList;
+    }
+    
+    
 }

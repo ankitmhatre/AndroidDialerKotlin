@@ -68,7 +68,7 @@
             android:focusable="true"
             android:scaleType="center"
             android:src="@drawable/ic_call_end"
-            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
     />
 
@@ -76,7 +76,8 @@
             android:id="@+id/buttonAnswer"
             android:layout_width="80dp"
             android:layout_height="80dp"
-android:layout_above="@id/buttonHangup"
+
+            android:layout_above="@id/buttonHangup"
             android:layout_margin="80dp"
             app:backgroundTint="#07c663"
             app:fabSize="normal"
@@ -84,7 +85,7 @@ android:layout_above="@id/buttonHangup"
             android:focusable="true"
             android:scaleType="center"
             android:src="@drawable/ic_call"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_alignParentBottom="true"
 
             tools:visibility="visible"

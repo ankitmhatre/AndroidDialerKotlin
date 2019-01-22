@@ -3,7 +3,7 @@ package com.am.arelok
 data class GsmCall(val status: GsmCall.Status, val displayName: String?) {
 
     enum class Status {
-        CONNECTING,
+        CONNECTING,//a
         DIALING,
         RINGING,
         ACTIVE,
