@@ -30,7 +30,7 @@ public class SimpleSocketActivty extends AppCompatActivity {
         gloabalres = "HI Ankit here";
         call_list_rv = (RecyclerView) findViewById(R.id.call_list_rv);
         call_list_rv.setLayoutManager(new LinearLayoutManager(this));
-        call_list_rv.setHasFixedSize(true);
+
         final RecentCallAdapter recentCallAdapter = new RecentCallAdapter();
         call_list_rv.setAdapter(recentCallAdapter);
 

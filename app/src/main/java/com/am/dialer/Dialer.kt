@@ -16,28 +16,53 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.am.RecentCallAdapter
 import com.am.RecentCallViewModel
 import com.am.service.MyConnectionService
-import kotlinx.android.synthetic.main.activity_dialer.*
 import kotlinx.android.synthetic.main.dialer_number_layout.*
 
 
-class Dialer : AppCompatActivity(), View.OnTouchListener {
+class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
 
-    private var recentCallViewModel: RecentCallViewModel? = null
+    lateinit var recentCallViewModel: RecentCallViewModel
+    lateinit var call_list_rv: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialer)
+        call_list_rv = findViewById<View>(R.id.call_list_rv) as RecyclerView
+        call_list_rv.layoutManager = LinearLayoutManager(this)
+        val recentCallAdapter = RecentCallAdapter()
+        call_list_rv.adapter = recentCallAdapter
+
+        recentCallViewModel = ViewModelProviders.of(this).get(RecentCallViewModel::class.java)
+        recentCallViewModel.getListLiveData().observe(this,
+            Observer { recentCalls ->
+                //update the list
+                recentCallAdapter.setRecentCalls(recentCalls)
+                //     Toast.makeText(SimpleSocketActivty.this, "changed", Toast.LENGTH_SHORT).show();
+            })
+
+
+
 
 
         fab.setOnClickListener { view ->
-            if (edtInput.length() > 0) {
-                callTheEnteredNumber()
-            }
+            if (dialerView.visibility == View.GONE) {
+                dialerView.visibility = View.VISIBLE
+                fab.setImageResource(R.drawable.ic_call)
+            } else {
 
+                if (edtInput.length() > 0) {
+                    callTheEnteredNumber()
+                }
+            }
 
             Log.d("MyInCallService", "inFab")
         }
@@ -48,6 +73,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
                 .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
                 .let(::startActivity)
         }
+        call_list_rv.setOnClickListener(this)
     }
 
     fun createPhoneAccountHandle(context: Context, accountName: String): PhoneAccountHandle {
@@ -60,7 +86,6 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
     private fun callTheEnteredNumber() {
         callThisPerson()
     }
-
 
 
     fun buttonClickEvent(v: View) {
@@ -101,9 +126,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
             R.id.btnHash -> {
                 edtInput.append("#")
             }
-            R.id.call_list_rv -> {
-                dialerView.visibility = View.GONE
-            }
+
         }
     }
 
@@ -189,11 +212,11 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
         var DRAWABLE_RIGHT = 2
         var DRAWABLE_BOTTOM = 3
 
-        if (event!=null) {
+        if (event != null) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 if (event.getRawX() >= (edtInput.getRight() - edtInput.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    if( edtInput.length() > 0 ) {
-                        edtInput.setText(edtInput.text.substring(0, edtInput.text.toString().length - 1 ))
+                    if (edtInput.length() > 0) {
+                        edtInput.setText(edtInput.text.substring(0, edtInput.text.toString().length - 1))
                         edtInput.setSelection(edtInput.getText().length)//position cursor at the end of the line
                     }
                     return true
@@ -206,5 +229,19 @@ class Dialer : AppCompatActivity(), View.OnTouchListener {
         return true
     }
 
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.call_list_rv -> {
+                Log.d("call_lis_rv", "clicked")
+                dialerView.visibility = View.GONE
+            }
+        }
+    }
 
+    override fun onBackPressed() {
+
+        dialerView.visibility = View.GONE
+        fab.setImageResource(R.drawable.ic_action_dialer)
+
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.am.dialer.Dialer;
 import com.am.dialer.R;
 
 import java.util.regex.Pattern;
@@ -51,7 +52,7 @@ public class StartingPoint extends AppCompatActivity implements View.OnClickList
 
 
                     PrefUtils.setBoolean(this, "first_launch", false);
-                    startActivityForResult(new Intent(this, SimpleSocketActivty.class), 11);
+                    startActivityForResult(new Intent(this, Dialer.class), 11);
                 }
 
                 break;

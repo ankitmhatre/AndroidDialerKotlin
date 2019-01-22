@@ -30,6 +30,7 @@ object CallManager {
             when (it.state) {
                 Call.STATE_RINGING -> rejectCall()
                 else               -> disconnectCall()
+
             }
         }
     }

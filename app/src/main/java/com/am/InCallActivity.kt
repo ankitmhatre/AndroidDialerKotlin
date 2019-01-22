@@ -100,8 +100,8 @@ class InCallActivity : AppCompatActivity() {
             GsmCall.Status.DIALING -> "Calling…"
             GsmCall.Status.RINGING -> "Incoming call"
             GsmCall.Status.ACTIVE -> {
-                buttonHangup.layoutParams = params
-                ""
+
+                "In Call"
             }
             GsmCall.Status.DISCONNECTED -> "Finished call"
             GsmCall.Status.UNKNOWN -> ""
