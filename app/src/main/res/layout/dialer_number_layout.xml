@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent"
-                                                     android:orientation="vertical"
-                                                     android:layout_gravity="bottom"
-                                                     android:gravity="center"
-
-
->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_gravity="bottom"
+              android:gravity="bottom">
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:background="#fff"
                   android:id="@+id/dialerView"
                   android:layout_gravity="bottom"
+
                   android:gravity="center">
 
         <RelativeLayout
@@ -22,7 +20,6 @@
                 android:layout_height="?actionBarSize"
                 android:id="@+id/search_rel"
 
-                android:layout_marginTop="10dp"
         >
 
             <LinearLayout
@@ -33,21 +30,23 @@
             <EditText
                     android:id="@+id/edtInput"
                     android:layout_width="match_parent"
-                    android:drawablePadding="2dip"
-                    android:drawableStart="@drawable/ic_more_vert"
+                    android:drawablePadding="4dp"
+
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
                     android:singleLine="true"
                     android:layout_height="match_parent"
-                    android:paddingTop="10dp"
-                    android:drawableRight="@drawable/ic_backspace"
                     android:drawableEnd="@drawable/ic_backspace"
                     android:layout_alignParentBottom="true"
-                    android:background="#fff"
+                    android:background="@drawable/recent_item_border"
                     android:keyboardNavigationCluster="false"
                     android:gravity="center"
+                    android:editable="true"
                     android:inputType="none|phone"
 
 
-                    android:textSize="@dimen/dialpad_btn_size"/>
+                    android:textSize="@dimen/dialpad_btn_size" android:layout_marginTop="0dp"
+                    android:layout_alignParentTop="true"/>
             <!--  <ImageButton
                       android:layout_width="wrap_content"
                       android:layout_alignParentEnd="true"
@@ -228,8 +227,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/fab_margin"
             android:backgroundTint="#00E676"
             app:srcCompat="@drawable/ic_call"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

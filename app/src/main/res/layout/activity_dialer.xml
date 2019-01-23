@@ -14,11 +14,6 @@
             tools:context=".Dialer">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/call_list_rv"
-
-                android:layout_height="match_parent"/>
 
 
         <include layout="@layout/dialer_number_layout"

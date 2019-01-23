@@ -41,7 +41,7 @@ class AddUSSDActivity : AppCompatActivity(), View.OnClickListener {
         val sPattern = Pattern.compile("^\\*[0-9\\*#]*[0-9]+[0-9\\*#]*#$")
 
         var value = sPattern.matcher(str).matches()
-        Log.d("pattren", value.toString() + str)
+
         return value
     }
 

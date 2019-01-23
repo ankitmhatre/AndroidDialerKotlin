@@ -52,6 +52,8 @@ public class StartingPoint extends AppCompatActivity implements View.OnClickList
 
 
                     PrefUtils.setBoolean(this, "first_launch", false);
+                    PrefUtils.setInt(this, "total_minutes", 0);
+
                     startActivityForResult(new Intent(this, Dialer.class), 11);
                 }
 

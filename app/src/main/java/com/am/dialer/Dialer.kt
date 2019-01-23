@@ -11,18 +11,15 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.text.InputType
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.am.AddUSSDActivity
-import com.am.RecentCallAdapter
-import com.am.CallnUssdViewModel
+import com.am.CallLogsActivity
 import com.am.service.MyConnectionService
 import kotlinx.android.synthetic.main.dialer_number_layout.*
 
@@ -30,30 +27,9 @@ import kotlinx.android.synthetic.main.dialer_number_layout.*
 class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
 
-    lateinit var callnUssdViewModel: CallnUssdViewModel
-    lateinit var call_list_rv: RecyclerView
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialer)
-        call_list_rv = findViewById<View>(R.id.call_list_rv) as RecyclerView
-
-//we can even delete item
-        //all the provisions are already present
-
-
-        call_list_rv.layoutManager = LinearLayoutManager(this)
-        val recentCallAdapter = RecentCallAdapter()
-        call_list_rv.adapter = recentCallAdapter
-
-        callnUssdViewModel = ViewModelProviders.of(this).get(CallnUssdViewModel::class.java)
-        callnUssdViewModel.getListLiveData().observe(this,
-            Observer { recentCalls ->
-                //update the list
-                recentCallAdapter.setRecentCalls(recentCalls)
-                //     Toast.makeText(SimpleSocketActivty.this, "changed", Toast.LENGTH_SHORT).show();
-            })
 
 
 
@@ -79,7 +55,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
                 .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
                 .let(::startActivity)
         }
-        call_list_rv.setOnClickListener(this)
+
     }
 
     fun createPhoneAccountHandle(context: Context, accountName: String): PhoneAccountHandle {
@@ -226,8 +202,6 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
                         edtInput.setSelection(edtInput.getText().length)//position cursor at the end of the line
                     }
                     return true
-                } else if (event.getRawX() <= (edtInput.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
-                    openSettings();
                 }
             }
         }
@@ -235,6 +209,25 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
 
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_dialer, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.ussd_menu_btn -> {
+                startActivity(Intent(this, AddUSSDActivity::class.java))
+
+            }
+            R.id.call_logs -> {
+                startActivity(Intent(this, CallLogsActivity::class.java))
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun openSettings() {
@@ -251,10 +244,5 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
         }
     }
 
-    override fun onBackPressed() {
 
-        dialerView.visibility = View.GONE
-        fab.setImageResource(R.drawable.ic_action_dialer)
-
-    }
 }
