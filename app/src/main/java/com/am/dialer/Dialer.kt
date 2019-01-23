@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.AddUSSDActivity
 import com.am.RecentCallAdapter
-import com.am.RecentCallViewModel
+import com.am.CallnUssdViewModel
 import com.am.service.MyConnectionService
 import kotlinx.android.synthetic.main.dialer_number_layout.*
 
@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.dialer_number_layout.*
 class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
 
-    lateinit var recentCallViewModel: RecentCallViewModel
+    lateinit var callnUssdViewModel: CallnUssdViewModel
     lateinit var call_list_rv: RecyclerView
 
 
@@ -47,8 +47,8 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
         val recentCallAdapter = RecentCallAdapter()
         call_list_rv.adapter = recentCallAdapter
 
-        recentCallViewModel = ViewModelProviders.of(this).get(RecentCallViewModel::class.java)
-        recentCallViewModel.getListLiveData().observe(this,
+        callnUssdViewModel = ViewModelProviders.of(this).get(CallnUssdViewModel::class.java)
+        callnUssdViewModel.getListLiveData().observe(this,
             Observer { recentCalls ->
                 //update the list
                 recentCallAdapter.setRecentCalls(recentCalls)

@@ -3,7 +3,7 @@ package com.am.arelok
 import android.app.Application
 import android.telecom.Call
 import android.util.Log
-import com.am.RecentCallViewModel
+import com.am.CallnUssdViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -15,7 +15,7 @@ object CallManager {
     private val subject = BehaviorSubject.create<GsmCall>()
 
     private var currentCall: Call? = null
-    var viewModal: RecentCallViewModel = RecentCallViewModel(Application())
+    var viewModal: CallnUssdViewModel = CallnUssdViewModel(Application())
     fun updates(): Observable<GsmCall> = subject
 
     fun updateCall(call: Call?) {

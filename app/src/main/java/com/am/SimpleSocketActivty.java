@@ -1,7 +1,6 @@
 package com.am;
 
 import android.os.Bundle;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -21,7 +20,7 @@ public class SimpleSocketActivty extends AppCompatActivity {
     boolean end = false;
     String gloabalres = "";
     RecyclerView call_list_rv;
-    private RecentCallViewModel recentCallViewModel;
+    private CallnUssdViewModel callnUssdViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,8 +33,8 @@ public class SimpleSocketActivty extends AppCompatActivity {
         final RecentCallAdapter recentCallAdapter = new RecentCallAdapter();
         call_list_rv.setAdapter(recentCallAdapter);
 
-        recentCallViewModel = ViewModelProviders.of(this).get(RecentCallViewModel.class);
-        recentCallViewModel.getListLiveData().observe(this, new Observer<List<RecentCall>>() {
+        callnUssdViewModel = ViewModelProviders.of(this).get(CallnUssdViewModel.class);
+        callnUssdViewModel.getListLiveData().observe(this, new Observer<List<RecentCall>>() {
             @Override
             public void onChanged(List<RecentCall> recentCalls) {
                 //update the list

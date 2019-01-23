@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class UssdItem(
     @PrimaryKey(autoGenerate = true)
-    var ussd_id: String? = null,
+    var ussd_id: Int? = null,
     var ussd_no: String? = null,
     var done: Boolean? = null,
     var timeAtCreation: String? = null,

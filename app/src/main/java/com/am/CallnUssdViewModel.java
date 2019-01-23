@@ -7,12 +7,12 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class RecentCallViewModel extends AndroidViewModel {
+public class CallnUssdViewModel extends AndroidViewModel {
     public CallnUssdRepository callnUssdRepository;
     public LiveData<List<RecentCall>> listLiveData;
     public LiveData<List<UssdItem>> ussdList;
 
-    public RecentCallViewModel(@NonNull Application application) {
+    public CallnUssdViewModel(@NonNull Application application) {
         super(application);
         callnUssdRepository = new CallnUssdRepository(application);
         listLiveData = callnUssdRepository.getAllCalls();

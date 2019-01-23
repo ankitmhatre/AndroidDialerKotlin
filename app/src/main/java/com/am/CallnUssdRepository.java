@@ -101,7 +101,7 @@ public class CallnUssdRepository {
 
         @Override
         protected Void doInBackground(UssdItem... ussdItems) {
-            ussdDao.delete(ussdItems[0].getUssd_id());
+            ussdDao.delete(ussdItems[0].getUssd_id().toString());
             return null;
         }
     }
