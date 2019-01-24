@@ -89,6 +89,13 @@ class InCallActivity : AppCompatActivity() {
     }
 
     private fun updateView(gsmCall: GsmCall) {
+        when (gsmCall.status) {
+            GsmCall.Status.ACTIVE -> startTimer()
+            GsmCall.Status.DISCONNECTED -> stopTimer()
+            else -> Unit
+        }
+
+
         textStatus.visibility = when (gsmCall.status) {
             GsmCall.Status.ACTIVE -> View.GONE
             else -> View.VISIBLE
@@ -148,11 +155,6 @@ class InCallActivity : AppCompatActivity() {
             buttonHangup.postDelayed({ finish() }, 3000)
         }
 
-        when (gsmCall.status) {
-            GsmCall.Status.ACTIVE -> startTimer()
-            GsmCall.Status.DISCONNECTED -> stopTimer()
-            else -> Unit
-        }
 
         textDisplayName.text = gsmCall.displayName ?: "Unknown"
 

@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class RecentCall(
     @PrimaryKey(autoGenerate = true)
     var c_id: Int? = null,
+    var dialed_on: String? = null,
     var time_started: String? = null,
     var incoming: Boolean? = null,
     var time_ended: String? = null,

@@ -8,7 +8,7 @@
               android:paddingEnd="8dp"
 
               android:background="@drawable/recent_item_border"
-              android:layout_height="72dp">
+              android:layout_height="?actionBarSize">
     <LinearLayout
             android:orientation="horizontal"
 
@@ -25,39 +25,24 @@
                     android:layout_height="24dp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
-                    android:text="Hello"
+                    android:text="timestamp"
                     android:textSize="22sp"
                     android:textColor="#000"
                     android:textStyle="bold"
-                    android:id="@+id/mainnumber_tv"/>
+                    android:id="@+id/ussd_timestamp"/>
             <TextView
-                    android:layout_gravity="end"
+                    android:layout_gravity="bottom"
 
                     android:layout_width="match_parent"
-                    android:text="Dialed on "
+                    android:text="Status "
                     android:gravity="bottom"
                     android:textSize="14sp"
                     android:layout_height="24dp"
                     app:srcCompat="@drawable/ic_launcher_background"
-                    android:id="@+id/dialed_on_tv"/>
-            <TextView
+                    android:id="@+id/transaction_status"/>
 
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center_vertical"
-                    android:text="Total Time"
-                    android:textSize="12sp"
-                    android:id="@+id/duration_tv"/>
         </LinearLayout>
-        <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.1"
-                android:layout_width="0dp"
 
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_launcher_background"
-                android:id="@+id/imageView_ic"/>
         <TextView
                 android:layout_weight="0.2"
                 android:layout_width="0dp"
@@ -67,7 +52,7 @@
                 android:text="102"
                 android:layout_gravity="center"
                 android:textSize="22sp"
-                android:id="@+id/credits_textt"/>
+                android:id="@+id/ussd_units"/>
 
     </LinearLayout>
 

@@ -11,7 +11,7 @@ import androidx.room.Update
 @Dao
 interface RecentCallDao {
 
-    @Query("SELECT * from recentcall ORDER BY time_started DESC")
+    @Query("SELECT * from recentcall ORDER BY dialed_on DESC")
     fun getAll(): LiveData<List<RecentCall>>
 
     @Insert(onConflict = REPLACE)

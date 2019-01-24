@@ -42,7 +42,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'com.afollestad.material-dialogs:core:2.0.0-rc7'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'

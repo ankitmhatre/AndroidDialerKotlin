@@ -10,15 +10,16 @@ import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
 import android.util.Log
+import com.am.CallnUssdDatabase
 import com.am.InCallActivity
 import com.am.RecentCall
 import com.am.RecentCallDao
-import com.am.CallnUssdDatabase
 
 
 class CallService : InCallService() {
     public var incoming: Boolean = false
     lateinit var recentnewCall: RecentCall
+
     companion object {
         private const val LOG_TAG = "CallService"
     }
@@ -73,7 +74,7 @@ class CallService : InCallService() {
         Log.d("CallService", "oncalladded")
         //   Log.d("CallService", call?.details)
         recentnewCall = RecentCall(
-            time_started = System.currentTimeMillis().toString(),
+
             number = call.details.handle.schemeSpecificPart
         )
         call.registerCallback(callCallback)
@@ -106,23 +107,41 @@ class CallService : InCallService() {
                 11 -> "STATE_PULLING_CALL"
                 else -> "UNKNOWN"
             }
-            Log.d("recentcall", logstr)
+
+            Log.d("CallState", logstr)
 
 
             when (call.state) {
                 1 -> {
+                    recentnewCall.incoming = false
+                    recentnewCall.dialed_on = System.currentTimeMillis().toString()
+                }
+
+                2 -> {
+                    recentnewCall.dialed_on = System.currentTimeMillis().toString()
+                    recentnewCall.incoming = true
+                    // InsertRecenCall(application, incoming).execute(call)
+                }
+                4 -> {
+                    recentnewCall.time_started = System.currentTimeMillis().toString()
+
+                }
+                7 -> {
+                    if (recentnewCall.time_ended == null) {
+                        recentnewCall.time_ended = System.currentTimeMillis().toString()
+                    }
+
+                    if (recentnewCall.incoming != null)
+                        InsertRecenCall(application).execute(recentnewCall)
+                    Log.d("CallState", recentnewCall.toString())
+                }
+                9 -> {
 
                     recentnewCall.incoming = false
                     // InsertRecenCall(this@CallService.application, incoming).execute(call)
                 }
-                2 -> {
-
-                    recentnewCall.incoming = true
-                    // InsertRecenCall(application, incoming).execute(call)
-                }
-                7 -> {
+                10 -> {
                     recentnewCall.time_ended = System.currentTimeMillis().toString()
-                    InsertRecenCall(application).execute(recentnewCall)
                 }
             }
 
@@ -152,7 +171,6 @@ class CallService : InCallService() {
             return ""
         }
     }
-
 
 
 }

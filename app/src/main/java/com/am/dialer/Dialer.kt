@@ -5,6 +5,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.telecom.PhoneAccountHandle
@@ -18,20 +20,29 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.am.AddUSSDActivity
 import com.am.CallLogsActivity
+import com.am.InCallActivity
+import com.am.UssdActivity
+import com.am.arelok.CallManager
+import com.am.arelok.GsmCall
 import com.am.service.MyConnectionService
+import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.dialer_number_layout.*
 
 
 class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
+    private val LOG_TAG = "DialerActivity"
+    lateinit var time: String
 
+
+    private var updatesDisposable = Disposables.empty()
+    private var timerDisposable = Disposables.empty()
+
+    lateinit var menut: Menu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialer)
-
-
 
 
 
@@ -56,6 +67,56 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
                 .let(::startActivity)
         }
 
+    }
+
+    override fun onResume() {
+
+        updatesDisposable = CallManager.updates()
+            .doOnEach { Log.i(LOG_TAG, "updated call: $it") }
+            .doOnError { throwable -> Log.e(LOG_TAG, "Error processing call", throwable) }
+            .subscribe { updateView(it) }
+
+
+
+        super.onResume()
+    }
+
+    fun updateView(gsmCall: GsmCall) {
+        if (supportActionBar != null) {
+            when (gsmCall.status) {
+                GsmCall.Status.DISCONNECTED -> {
+                    //red
+                    supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#375f91")))
+
+                }
+                GsmCall.Status.DIALING -> {
+                    supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5f6368")))
+                }
+                GsmCall.Status.RINGING -> {
+                    //down green
+                    supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#3d8c39")))
+                }
+                GsmCall.Status.ACTIVE -> {
+                    //indigo
+                    supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5c00d2")))
+
+                }
+                GsmCall.Status.UNKNOWN -> {
+                    //grey
+                    supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#375f91")))
+
+                }
+                GsmCall.Status.CONNECTING -> {
+                    //grey and blue
+                    supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#375f91")))
+
+                }
+                //
+            }
+
+
+        }
+        Log.d("DialerActivity", gsmCall.status.toString())
     }
 
     fun createPhoneAccountHandle(context: Context, accountName: String): PhoneAccountHandle {
@@ -175,9 +236,13 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
         var tel = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 
-        try {
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CALL_PHONE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             tel.placeCall(uri, bundle)
-        } catch (e: Exception) {
         }
 
     }
@@ -212,6 +277,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menut = menu
         menuInflater.inflate(R.menu.menu_dialer, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -219,21 +285,21 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.ussd_menu_btn -> {
-                startActivity(Intent(this, AddUSSDActivity::class.java))
+                startActivity(Intent(this, UssdActivity::class.java))
 
             }
             R.id.call_logs -> {
                 startActivity(Intent(this, CallLogsActivity::class.java))
             }
+            /*R.id.units_switch_on_dialer_menu -> {
+                var unitval = item.setChecked(true)
+                Log.d("unoits", unitval.toString())
+            }*/
 
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun openSettings() {
-        var i: Intent = Intent(this, AddUSSDActivity::class.java)
-        startActivity(i)
-    }
 
     override fun onClick(v: View?) {
         when (v?.id) {

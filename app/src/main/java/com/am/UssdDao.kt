@@ -8,7 +8,7 @@ import androidx.room.Query
 
 @Dao
 interface UssdDao {
-    @Query("SELECT * from ussditem ORDER BY timeAtCreation DESC")
+    @Query("SELECT * from ussditem WHERE done = 'true' ORDER BY timeofTransaction DESC")
     fun getAll(): LiveData<List<UssdItem>>
 
     @Insert(onConflict = REPLACE)
@@ -20,5 +20,12 @@ interface UssdDao {
     @Query("DELETE from ussditem")
     fun deleteAll()
 
+    @Query("UPDATE ussditem SET done = :done ,timeofTransaction=:timeoftransition , statusofthistransaction= :transactionStatus")
+    fun updateThis(
+
+        done: Boolean,
+        timeoftransition: String,
+        transactionStatus: String
+    )
 
 }
