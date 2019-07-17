@@ -1,4 +1,4 @@
-package com.am.arelok
+package com.am.dialerstates
 
 data class GsmCall(val status: GsmCall.Status, val displayName: String?) {
 

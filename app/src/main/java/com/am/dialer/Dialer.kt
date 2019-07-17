@@ -9,25 +9,23 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.text.InputType
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.am.CallLogsActivity
-import com.am.InCallActivity
-import com.am.UssdActivity
-import com.am.arelok.CallManager
-import com.am.arelok.GsmCall
+import com.am.dialerstates.CallManager
+import com.am.dialerstates.GsmCall
 import com.am.service.MyConnectionService
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.dialer_number_layout.*
+import java.util.regex.Pattern
 
 
 class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
@@ -35,6 +33,8 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
     private val LOG_TAG = "DialerActivity"
     lateinit var time: String
 
+
+    lateinit var tel: TelecomManager
 
     private var updatesDisposable = Disposables.empty()
     private var timerDisposable = Disposables.empty()
@@ -59,6 +59,7 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
             Log.d("MyInCallService", "inFab")
         }
+
         edtInput.setOnTouchListener(this)
 
         if (getSystemService(TelecomManager::class.java).defaultDialerPackage != packageName) {
@@ -67,7 +68,9 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
                 .let(::startActivity)
         }
 
+
     }
+
 
     override fun onResume() {
 
@@ -223,18 +226,38 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
         }
     }
 
+    private fun validateUSSD(str: String): Boolean {
+        val sPattern = Pattern.compile("^\\*[0-9\\*#]*[0-9]+[0-9\\*#]*#$")
+
+        var value = sPattern.matcher(str).matches()
+
+        return value
+    }
+
     private fun callPhone() {
+        var handller = Handler()
+        handller.postDelayed({
+            /* Create an Intent that will start the Menu-Activity. */
+            Log.d("ussddata", "inside handler")
+            // finish()
+        }, 3000)
+
         //  var phonecall = createPhoneAccountHandle(this, MyConnectionService.EXTRA_PHONE_ACCOUNT)
         Log.d("MyInCallService", "callPhone start")
+
+        var s = edtInput.text.toString()
+        var callstring: String
+
+
         var uri: Uri = Uri.fromParts("tel", edtInput.text.toString(), null)
         var bundle: Bundle = Bundle()
         //Connection.PROPERTY_SELF_MANAGED
         /* bundle.putBoolean(TelecomManager.EXTRA_START_CALL_WITH_SPEAKERPHONE, true)
-         bundle.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phonecall)*/
+     bundle.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phonecall)*/
 
         Log.d("MyInCallService", "callPhone after 3 lines ")
 
-        var tel = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+        tel = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 
 
         if (ActivityCompat.checkSelfPermission(
@@ -245,6 +268,16 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
             tel.placeCall(uri, bundle)
         }
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        when (requestCode) {
+            909 -> {
+                Log.d("ussddata", data.toString())
+            }
+        }
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -274,30 +307,6 @@ class Dialer : AppCompatActivity(), View.OnTouchListener, View.OnClickListener {
 
 
         return true
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menut = menu
-        menuInflater.inflate(R.menu.menu_dialer, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.ussd_menu_btn -> {
-                startActivity(Intent(this, UssdActivity::class.java))
-
-            }
-            R.id.call_logs -> {
-                startActivity(Intent(this, CallLogsActivity::class.java))
-            }
-            /*R.id.units_switch_on_dialer_menu -> {
-                var unitval = item.setChecked(true)
-                Log.d("unoits", unitval.toString())
-            }*/
-
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 

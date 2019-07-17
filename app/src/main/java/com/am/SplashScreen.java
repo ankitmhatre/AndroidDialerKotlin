@@ -13,15 +13,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //set default false
-        if (PrefUtils.getBoolean(this, "first_launch", true)) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivityForResult(new Intent(SplashScreen.this, StartingPoint.class), 0);
 
-                }
-            }, 1500);
-        } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -30,7 +22,7 @@ public class SplashScreen extends AppCompatActivity {
                 }
             }, 1500);
 
-        }
+
 
     }
 

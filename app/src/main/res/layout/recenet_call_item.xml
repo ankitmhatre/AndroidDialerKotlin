@@ -46,7 +46,7 @@
                     android:layout_height="match_parent"
 
                     android:gravity="center_vertical"
-                    android:text="Total Time"
+                    android:text="Total Time = 0 s"
                     android:textSize="12sp"
                     android:id="@+id/duration_tv"/>
         </LinearLayout>
@@ -64,7 +64,7 @@
                 android:layout_height="match_parent"
 
                 android:gravity="center"
-                android:text="102"
+                android:text="0"
                 android:layout_gravity="center"
                 android:textSize="22sp"
                 android:id="@+id/credits_textt"/>

@@ -1,24 +1,18 @@
-package com.am.arelok
+package com.am.dialerstates
 
-import android.app.Application
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.IBinder
 import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
 import android.util.Log
-import com.am.CallnUssdDatabase
 import com.am.InCallActivity
-import com.am.RecentCall
-import com.am.RecentCallDao
 
 
 class CallService : InCallService() {
     public var incoming: Boolean = false
-    lateinit var recentnewCall: RecentCall
 
     companion object {
         private const val LOG_TAG = "CallService"
@@ -73,10 +67,7 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
         Log.d("CallService", "oncalladded")
         //   Log.d("CallService", call?.details)
-        recentnewCall = RecentCall(
 
-            number = call.details.handle.schemeSpecificPart
-        )
         call.registerCallback(callCallback)
 
         startActivity(Intent(this, InCallActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK))
@@ -111,64 +102,10 @@ class CallService : InCallService() {
             Log.d("CallState", logstr)
 
 
-            when (call.state) {
-                1 -> {
-                    recentnewCall.incoming = false
-                    recentnewCall.dialed_on = System.currentTimeMillis().toString()
-                }
 
-                2 -> {
-                    recentnewCall.dialed_on = System.currentTimeMillis().toString()
-                    recentnewCall.incoming = true
-                    // InsertRecenCall(application, incoming).execute(call)
-                }
-                4 -> {
-                    recentnewCall.time_started = System.currentTimeMillis().toString()
-
-                }
-                7 -> {
-                    if (recentnewCall.time_ended == null) {
-                        recentnewCall.time_ended = System.currentTimeMillis().toString()
-                    }
-
-                    if (recentnewCall.incoming != null)
-                        InsertRecenCall(application).execute(recentnewCall)
-                    Log.d("CallState", recentnewCall.toString())
-                }
-                9 -> {
-
-                    recentnewCall.incoming = false
-                    // InsertRecenCall(this@CallService.application, incoming).execute(call)
-                }
-                10 -> {
-                    recentnewCall.time_ended = System.currentTimeMillis().toString()
-                }
-            }
 
             CallManager.updateCall(call)
 
-        }
-    }
-
-    class InsertRecenCall : AsyncTask<RecentCall, Void, String> {
-        var application: Application
-        var recentCallDao: RecentCallDao
-
-        constructor(application: Application) {
-            this.application = application
-            recentCallDao = CallnUssdDatabase.getInstance(application).RecentCallDao()
-
-        }
-
-
-        override fun doInBackground(vararg params: RecentCall): String {
-
-
-            recentCallDao.insert(params[0])
-
-            Log.d("recentcall", params[0].toString())
-
-            return ""
         }
     }
 

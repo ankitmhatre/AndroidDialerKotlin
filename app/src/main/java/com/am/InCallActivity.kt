@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.am.arelok.CallManager
-import com.am.arelok.GsmCall
+import com.am.dialerstates.CallManager
+import com.am.dialerstates.GsmCall
 import com.am.dialer.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,7 +37,7 @@ class InCallActivity : AppCompatActivity() {
     lateinit var mSensorManager: SensorManager
     lateinit var mProximity: Sensor
 
-
+    private var lastTimeSec = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
@@ -91,7 +91,14 @@ class InCallActivity : AppCompatActivity() {
     private fun updateView(gsmCall: GsmCall) {
         when (gsmCall.status) {
             GsmCall.Status.ACTIVE -> startTimer()
-            GsmCall.Status.DISCONNECTED -> stopTimer()
+            GsmCall.Status.DISCONNECTED -> {
+                val old = (PrefUtils.getInt(this, "total_credits", 0) - lastTimeSec)
+                PrefUtils.setInt(this, "total_credits", old.toInt())
+                //recharge
+
+
+                stopTimer()
+            }
             else -> Unit
         }
 
@@ -124,7 +131,7 @@ class InCallActivity : AppCompatActivity() {
             }
             GsmCall.Status.CONNECTING -> {
                 //grey and blue
-                    imageBackground.setBackgroundColor(Color.parseColor("#375f91"))
+                imageBackground.setBackgroundColor(Color.parseColor("#375f91"))
 
             }
             //
@@ -185,9 +192,23 @@ class InCallActivity : AppCompatActivity() {
         timerDisposable = Observable.interval(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
+
+                lastTimeSec = getCreditsCalculation(it)
+                Log.d("disposableTime", lastTimeSec.toString())
                 textDuration.text = it.toDurationString()
 
+
             }
+    }
+
+    private fun getCreditsCalculation(diff: Long): Long {
+        val check: Long
+        if (false) {
+            check = TimeUnit.MILLISECONDS.toMinutes(diff)
+        } else {
+            check = TimeUnit.MILLISECONDS.toSeconds(diff)
+        }
+        return check
     }
 
     private fun stopTimer() {

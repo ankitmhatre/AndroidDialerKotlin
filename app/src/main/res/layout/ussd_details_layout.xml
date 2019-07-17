@@ -41,9 +41,25 @@
             android:layout_height="wrap_content"
             android:clickable="true" app:srcCompat="@drawable/ic_action_add"
             android:id="@+id/add_ussd_fab"/>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="?actionBarSize" app:srcCompat="@drawable/ic_action_warning"
+            android:id="@+id/empty_icon"/>
+    <TextView
+            android:text="Nothing here"
+            android:layout_below="@id/empty_icon"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:id="@+id/rt"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/ussd_list"
             android:layout_below="@id/topper"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
+
 </RelativeLayout>
