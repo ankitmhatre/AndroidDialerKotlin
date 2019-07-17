@@ -1,3 +1,4 @@
-# V_Gproject
+# Simple Dialer Application
 
-`The Dialer application(as of now)`
+Make sure you fork and send me a P.R..
+So that we can contribute to sharing and solving
